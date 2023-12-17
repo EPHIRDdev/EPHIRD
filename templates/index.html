@@ -1,60 +1,174 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Monte Carlo Simulation</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPHIRD - Evaluating Phosphorus Impacts of Residential Developments</title>
+    <style>
+        body, html {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e7eff6;
+            color: #333;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            color: #0056b3;
+            font-size: 2.5em;
+        }
+        .header p {
+            color: #333;
+            font-size: 1.2em;
+        }
+        form {
+            margin: 20px auto;
+            width: 90%;
+            max-width: 960px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            color: white;
+            background-color: #0056b3;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #003d82;
+        }
+        #resultStats, #resultGraph {
+            margin-top: 20px;
+            width: 90%;
+            max-width: 960px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #resultStats {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        @media screen and (min-width: 600px) {
+            .form-group {
+                display: flex;
+                justify-content: space-between;
+            }
+            .form-group label,
+            .form-group input,
+            .form-group select {
+                flex: 1;
+                max-width: 48%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Monte Carlo Simulation Input</h1>
-    <form id="simulationForm" onsubmit="event.preventDefault(); runSimulation();">
-        <!-- Form fields for each parameter in your Monte Carlo simulation -->
-        <label for="N">N:</label>
-        <input type="number" id="N" name="N" required><br>
+    <div class="header">
+        <h1>EPHIRD</h1>
+        <p>Evaluating Phosphorus Impacts of Residential Developments</p>
+    </div>
 
-        <label for="Oc">Oc:</label>
-        <input type="number" id="Oc" name="Oc" required><br>
-
-        <label for="W">W:</label>
-        <input type="number" id="W" name="W" required><br>
-
-        <label for="C">C:</label>
-        <input type="number" id="C" name="C" required><br>
-
-        <!-- WWTW Dropdown for selecting a value for 'C' -->
-        <label for="wwtwDropdown">Select WWTW for 'C' Value:</label>
-        <select id="wwtwDropdown" onchange="updateCValue()">
-            <option value="">--Select WWTW--</option>
-            {% for wwtw in wwtw_data %}
+    <form id="simulationForm" onsubmit="event.preventDefault(); validateAndRunSimulation();">
+        <div class="form-group">
+            <label for="N">N:</label>
+            <input type="text" id="N" name="N" required>
+        </div>
+        <div class="form-group">
+            <label for="Oc">Oc:</label>
+            <input type="text" id="Oc" name="Oc" required>
+        </div>
+        <div class="form-group">
+            <label for="W">W:</label>
+            <input type="text" id="W" name="W" required>
+        </div>
+        <div class="form-group">
+            <label for="C">C:</label>
+            <input type="text" id="C" name="C" required>
+        </div>
+        <div class="form-group">
+            <label for="L">L:</label>
+            <input type="text" id="L" name="L" required>
+        </div>
+        <div class="form-group">
+            <label for="Cl">Cl:</label>
+            <input type="text" id="Cl" name="Cl" required>
+        </div>
+        <div class="form-group">
+            <label for="Ee">Ee:</label>
+            <input type="text" id="Ee" name="Ee" required>
+        </div>
+        <div class="form-group">
+            <label for="A">A:</label>
+            <input type="text" id="A" name="A" required>
+        </div>
+        <div class="form-group">
+            <label for="En">En:</label>
+            <input type="text" id="En" name="En" required>
+        </div>
+        <div class="form-group">
+            <label for="wwtwDropdown">Select WWTW for 'C' Value:</label>
+            <select id="wwtwDropdown" name="C" onchange="updateCValue();">
+                <option value="">--Select WWTW--</option>
+                {% for wwtw in wwtw_data %}
                 <option value="{{ wwtw['Phosphorus_Concentration'] }}">{{ wwtw['WWTW_Name'] }}</option>
-            {% endfor %}
-        </select><br>
-
-        <label for="L">L:</label>
-        <input type="number" id="L" name="L" required><br>
-
-        <label for="Cl">Cl:</label>
-        <input type="number" id="Cl" name="Cl" required><br>
-
-        <label for="Ee">Ee:</label>
-        <input type="number" id="Ee" name="Ee" required><br>
-
-        <label for="A">A:</label>
-        <input type="number" id="A" name="A" required><br>
-
-        <label for="En">En:</label>
-        <input type="number" id="En" name="En" required><br>
-
+                {% endfor %}
+            </select>
+        </div>
         <button type="submit">Run Simulation</button>
     </form>
 
-    <h2>Simulation Results</h2>
     <div id="resultStats"></div>
     <div id="resultGraph"></div>
 
     <script>
+        function validateAndRunSimulation() {
+            var isValid = true;
+            var numberInputs = document.querySelectorAll('input[type=text]');
+            numberInputs.forEach(function(input) {
+                if (input.value !== '') {
+                    if (isNaN(input.value) || !isFinite(input.value)) {
+                        alert('Please enter a valid number for ' + input.name);
+                        isValid = false;
+                    } else {
+                        var value = parseFloat(input.value);
+                        input.value = value.toFixed(3);
+                    }
+                }
+            });
+
+            if (isValid) {
+                runSimulation();
+            }
+        }
+
         function runSimulation() {
             document.getElementById('resultStats').innerHTML = '';
             document.getElementById('resultGraph').innerHTML = '';
-
             var formData = new FormData(document.getElementById('simulationForm'));
             fetch('/run_simulation', {
                 method: 'POST',
@@ -64,9 +178,9 @@
             .then(response => response.json())
             .then(data => {
                 var stats = data.stats;
-                var statsText = `Mean of Output: ${stats.mean_output.toFixed(2)}<br>` +
-                                `Median of Output: ${stats.median_output.toFixed(2)}<br>` +
-                                `Standard Deviation of Output: ${stats.std_dev_output.toFixed(2)}`;
+                var statsText = `Mean of Output: ${parseFloat(stats.mean_output).toFixed(3)}<br>` +
+                                `Median of Output: ${parseFloat(stats.median_output).toFixed(3)}<br>` +
+                                `Standard Deviation of Output: ${parseFloat(stats.std_dev_output).toFixed(3)}`;
                 document.getElementById('resultStats').innerHTML = statsText;
                 document.getElementById('resultGraph').innerHTML = '<img src="' + data.graph + '" />';
             });
@@ -74,10 +188,10 @@
 
         function updateCValue() {
             var selectedValue = document.getElementById('wwtwDropdown').value;
-            if (selectedValue) {
-                document.getElementById('C').value = selectedValue;
-            }
+            document.getElementById('C').value = selectedValue;
         }
     </script>
 </body>
 </html>
+
+
