@@ -4,13 +4,19 @@
 # In[10]:
 
 
-from flask import Flask, render_template, request, jsonify
-import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import numpy as np
 import io
 import base64
+from flask import Flask, render_template, request, jsonify
+import pandas as pd
 
 app = Flask(__name__)
+
+# Load the processed WWTW data
+wwtw_data = pd.read_csv('processed_wwtw_data.csv')  
 
 # Your Monte Carlo simulation functions
 def compute_B(N, Oc, W, C, L, Cl, Ee, A, En):
@@ -37,6 +43,8 @@ def run_monte_carlo_simulation(N, Oc, W, C, L, Cl, Ee, A, En):
 
     # Generate the histogram plot
 
+# Generate the histogram plot
+    plt.figure()  # Create a new figure
     plt.hist(outputs, bins=50, color='dimgray', edgecolor='k')
     plt.xlabel('Nutrient budget (kg/yr)')
     plt.ylabel('Frequency')
@@ -46,6 +54,7 @@ def run_monte_carlo_simulation(N, Oc, W, C, L, Cl, Ee, A, En):
     # Convert plot to a PNG image in base64 format
     img = io.BytesIO()
     plt.savefig(img, format='png')
+    plt.close()  # Close the figure after saving it
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
 
@@ -53,7 +62,8 @@ def run_monte_carlo_simulation(N, Oc, W, C, L, Cl, Ee, A, En):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # Combine the logic of the two index functions
+    return render_template('index.html', wwtw_data=wwtw_data.to_dict('records'))
 
 @app.route('/run_simulation', methods=['POST'])
 def run_simulation():
@@ -79,7 +89,3 @@ if __name__ == '__main__':
 
 
 # In[ ]:
-
-
-
-
