@@ -98,8 +98,18 @@
             <label for="N">N:</label>
             <input type="text" id="N" name="N" required>
         </div>
+        
         <div class="form-group">
-            <label for="Oc">Oc:</label>
+            <label for="Local_authority">Local Authority:</label>
+            <select name="Local_authority" id="Local_authority" required>
+                <option value="">--Select Local Authority--</option>
+                {% for authority in local_authorities %}
+                <option value="{{ authority }}">{{ authority }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Oc">Oc (Bootstrapped):</label>
             <input type="text" id="Oc" name="Oc" required>
         </div>
         <div class="form-group">
@@ -132,7 +142,7 @@
         </div>
         <div class="form-group">
             <label for="wwtwDropdown">Select WWTW for 'C' Value:</label>
-            <select id="wwtwDropdown" name="C" onchange="updateCValue();">
+            <select id="wwtwDropdown" name="C" onchange="updateCValue();" required>
                 <option value="">--Select WWTW--</option>
                 {% for wwtw in wwtw_data %}
                 <option value="{{ wwtw['Phosphorus_Concentration'] }}">{{ wwtw['WWTW_Name'] }}</option>
@@ -146,6 +156,25 @@
     <div id="resultGraph"></div>
 
     <script>
+        document.getElementById('Local_authority').addEventListener('change', function() {
+            var authority = this.value;
+            var N = document.getElementById('N').value || 100;  // Default to 100 if N is not set
+
+            // Make a POST request to get the Oc values
+            fetch('/get_oc_values', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `Local_authority=${authority}&N=${N}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Populate the Oc field with the mean from the bootstrap
+                document.getElementById('Oc').value = data.mean_oc.toFixed(3);
+            });
+        });
+
         function validateAndRunSimulation() {
             var isValid = true;
             var numberInputs = document.querySelectorAll('input[type=text]');
@@ -162,28 +191,22 @@
             });
 
             if (isValid) {
-                runSimulation();
+                var formData = new FormData(document.getElementById('simulationForm'));
+                fetch('/run_simulation', {
+                    method: 'POST',
+                    body: new URLSearchParams(formData),
+                    cache: 'no-cache'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    var stats = data.stats;
+                    var statsText = `Mean of Output: ${parseFloat(stats.mean_output).toFixed(3)}<br>` +
+                                    `Median of Output: ${parseFloat(stats.median_output).toFixed(3)}<br>` +
+                                    `Standard Deviation of Output: ${parseFloat(stats.std_dev_output).toFixed(3)}`;
+                    document.getElementById('resultStats').innerHTML = statsText;
+                    document.getElementById('resultGraph').innerHTML = '<img src="' + data.graph + '" />';
+                });
             }
-        }
-
-        function runSimulation() {
-            document.getElementById('resultStats').innerHTML = '';
-            document.getElementById('resultGraph').innerHTML = '';
-            var formData = new FormData(document.getElementById('simulationForm'));
-            fetch('/run_simulation', {
-                method: 'POST',
-                body: new URLSearchParams(formData),
-                cache: 'no-cache'
-            })
-            .then(response => response.json())
-            .then(data => {
-                var stats = data.stats;
-                var statsText = `Mean of Output: ${parseFloat(stats.mean_output).toFixed(3)}<br>` +
-                                `Median of Output: ${parseFloat(stats.median_output).toFixed(3)}<br>` +
-                                `Standard Deviation of Output: ${parseFloat(stats.std_dev_output).toFixed(3)}`;
-                document.getElementById('resultStats').innerHTML = statsText;
-                document.getElementById('resultGraph').innerHTML = '<img src="' + data.graph + '" />';
-            });
         }
 
         function updateCValue() {
@@ -193,5 +216,4 @@
     </script>
 </body>
 </html>
-
 
