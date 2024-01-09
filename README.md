@@ -7,22 +7,30 @@ How to Run the App
 
 If you do not have Python installed:
 Download the latest version of Python from python.org
+
 Follow the installation instructions. Ensure that you check the option to 'Add Python to PATH' during installation
 
 
 **Step 2**: Download the App
 
 Visit the GitHub repository for the app (https://github.com/EPHIRDdev/EPHIRD)
+
 Click on the green "Code" button near the top of the page
+
 In the dropdown menu, click "Download ZIP"
+
 Once downloaded, extract the ZIP file to a folder on your computer
 
 
 **Step 3**: Navigate to the App Directory
 
+
 Open your command prompt or terminal from the Windows search bar
+
 Right click on the folder containing the app
+
 Select Copy as path 
+
 In the command prompt or terminal execute 
 
 cd PASTE YOUR PATH HERE
@@ -30,6 +38,7 @@ cd PASTE YOUR PATH HERE
 **or**
 
 Right click on the folder containing the app
+
 Select Open in terminal
 
 **Step 4**
