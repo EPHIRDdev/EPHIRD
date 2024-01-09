@@ -59,7 +59,7 @@ def run_monte_carlo_simulation (N, Oc, W, C, L, Cl, Ee, A, En, std_dev_oc):
     return results, f"data:image/png;base64,{plot_url}"
 
 
-def bootstrap_oc(dist, N, num_trials=1000):
+def bootstrap_oc(dist, N, num_trials=10000):
     means = []
     for _ in range(num_trials):
         samples = np.random.choice(dist, size=N, replace=True)
@@ -106,8 +106,8 @@ def run_simulation():
         Oc = float(request.form['Oc'])
         W = float(request.form['W'])
         C = float(request.form['C'])
-        L = float(request.form['L'])
-        Cl = float(request.form['Cl'])
+        L = 0.22 * W
+        Cl = 1
         Ee = float(request.form['Ee'])
         A = float(request.form['A'])
         En = float(request.form['En'])
