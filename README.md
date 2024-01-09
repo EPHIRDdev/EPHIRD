@@ -6,32 +6,25 @@ How to Run the App
 **Step 1**: Install Python
 
 If you do not have Python installed:
-Download the latest version of Python from python.org
-
+Download the latest version of Python from python.org  
 Follow the installation instructions. Ensure that you check the option to 'Add Python to PATH' during installation
 
 
 **Step 2**: Download the App
 
-Visit the GitHub repository for the app (https://github.com/EPHIRDdev/EPHIRD)
-
-Click on the green "Code" button near the top of the page
-
-In the dropdown menu, click "Download ZIP"
-
-Once downloaded, extract the ZIP file to a folder on your computer
+Visit the GitHub repository for the app (https://github.com/EPHIRDdev/EPHIRD)  
+Click on the green "Code" button near the top of the page  
+In the dropdown menu, click "Download ZIP"  
+Once downloaded, extract the ZIP file to a folder on your computer  
 
 
 **Step 3**: Navigate to the App Directory
 
 
-Open your command prompt or terminal from the Windows search bar
-
-Right click on the folder containing the app
-
-Select Copy as path 
-
-In the command prompt or terminal execute 
+Open your command prompt or terminal from the Windows search bar  
+Right click on the folder containing the app  
+Select Copy as path  
+In the command prompt or terminal execute  
 
 cd PASTE YOUR PATH HERE
 
@@ -47,10 +40,10 @@ Select Open in terminal
 
 Execute the the following in order to install the pre-requisite Python packages
 
-pip install Flask
-pip install pandas
-pip install numpy
-pip install matplotlib
+pip install Flask  
+pip install pandas  
+pip install numpy  
+pip install matplotlib  
 
 **Step 5**: Run the App
 
@@ -71,9 +64,10 @@ WARNING: This is a development server. Do not use it in a production deployment.
 Press CTRL+C to quit
 
 ctrl + leftclick on "http://127.0.0.1:5000" 
+
 **or**
 
-Open a web browser.
+Open a web browser  
 Visit http://127.0.0.1:5000/ 
 
 The app should now be running in your browser.
