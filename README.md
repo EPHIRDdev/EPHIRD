@@ -1,7 +1,7 @@
 # EPHIRD
 # Evaluating Phosphorus Impacts of Residential Development (EPHIRD) is a model used for calculating the freshwater catchement phophorus pollution budgets associated with new developments 
 
-How to Run the App
+# How to Run the App
 
 **Step 1**: Install Python
 
@@ -73,7 +73,7 @@ Visit http://127.0.0.1:5000/
 The app should now be running in your browser.
 
 
-User Guide 
+# User Guide 
 
 Inputs –   
 N = Number of dwellings  
