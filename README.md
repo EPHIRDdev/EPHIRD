@@ -71,3 +71,7 @@ Open a web browser
 Visit http://127.0.0.1:5000/ 
 
 The app should now be running in your browser.
+
+
+Please cite this software as 
+Goulbourne, C. (2023) EPHIRD (Version 2.1.1). Available at https://github.com/EPHIRDdev/EPHIRD
