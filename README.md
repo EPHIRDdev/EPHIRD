@@ -34,9 +34,9 @@ Right click on the folder containing the app
 
 Select Open in terminal
 
-**Step 4**
+**Step 4**:Install pre-requisite Python packages
 
-Execute the the following in order to install the pre-requisite Python packages
+Execute the the following:
 
 pip install Flask  
 pip install pandas  
@@ -45,7 +45,7 @@ pip install matplotlib
 
 **Step 5**: Run the App
 
-Run the app by executing:
+Execute the following:
 
 flask run
 
