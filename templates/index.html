@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
-<link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
-<link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
-<link rel="mask-icon" href="{{ url_for('static', filename='safari-pinned-tab.svg') }}" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ url_for('static', filename='safari-pinned-tab.svg') }}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EPHIRD - Evaluating Phosphorus Impacts of Residential Developments</title>
-
     <style>
         body, html {
             margin: 0;
@@ -65,14 +64,14 @@
         button:hover {
             background-color: #003d82;
         }
-        #resultStats, #resultGraph {
+        #resultStats, #resultGraph, #sensitivityAnalysis {
             margin-top: 20px;
             width: 90%;
             max-width: 960px;
             margin-left: auto;
             margin-right: auto;
         }
-        #resultStats {
+        #resultStats, #sensitivityAnalysis {
             background-color: #f9f9f9;
             padding: 15px;
             border-radius: 4px;
@@ -101,8 +100,7 @@
         <p>Evaluating Phosphorus Impacts of Residential Developments</p>
     </div>
 
-    <form id="simulationForm" onsubmit="event.preventDefault(); validateAndRunSimulation();"
-        </div>
+    <form id="simulationForm" onsubmit="event.preventDefault(); validateAndRunSimulation();">
         <div class="form-group">
             <label for="wwtwDropdown">WwTW:</label>
             <select id="wwtwDropdown" name="C" onchange="updateCValue();" required>
@@ -149,18 +147,27 @@
             <label for="En">En:</label>
             <input type="text" id="En" name="En" required>
         </div>
-        <button type="submit">Run Simulation</button>
+
+            <input type="hidden" id="std_dev_oc" name="std_dev_oc">
+        
+            <button type="submit">Run Simulation</button>
     </form>
 
     <div id="resultStats"></div>
     <div id="resultGraph"></div>
+
+    <button onclick="runSensitivityAnalysis()">Run Sensitivity Analysis</button>
+
+    <div id="sensitivityAnalysis">
+        <h3>Sensitivity Analysis</h3>
+        <img id="sensitivityGraph" src="" alt="Sensitivity Analysis Graph" style="max-width: 100%; height: auto;">
+    </div>
 
     <script>
         document.getElementById('Local_authority').addEventListener('change', function() {
             var authority = this.value;
             var N = document.getElementById('N').value || 100;  // Default to 100 if N is not set
 
-            // Make a POST request to get the Oc values
             fetch('/get_oc_values', {
                 method: 'POST',
                 headers: {
@@ -170,8 +177,8 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Populate the Oc field with the mean from the bootstrap
                 document.getElementById('Oc').value = data.mean_oc.toFixed(3);
+                document.getElementById('std_dev_oc').value = data.std_dev_oc;
             });
         });
 
@@ -208,11 +215,37 @@
                 });
             }
         }
+	
+        function runSensitivityAnalysis() {
+            var formData = new FormData(document.getElementById('simulationForm'));
+            var data = {};
 
-        function updateCValue() {
+            formData.forEach(function(value, key) {
+                data[key] = value;
+            });
+
+            fetch('/sensitivity_analysis', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.sensitivity_graph) {
+                    document.getElementById('sensitivityGraph').src = 'data:image/png;base64,' + data.sensitivity_graph;
+                }
+            })
+            .catch(error => {
+                console.error('Error during sensitivity analysis:', error);
+            });
+        }
+        
+	function updateCValue() {
             var selectedValue = document.getElementById('wwtwDropdown').value;
             document.getElementById('C').value = selectedValue;
         }
+
     </script>
+
 </body>
 </html>
