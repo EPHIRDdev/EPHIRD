@@ -26,7 +26,7 @@ Right click on the folder containing the app
 Select Copy as path  
 In the command prompt or terminal execute  
 
-cd PASTE YOUR PATH HERE
+cd _PASTE YOUR PATH HERE_
 
 _**or**_
 
