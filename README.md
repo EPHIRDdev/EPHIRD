@@ -74,4 +74,4 @@ The app should now be running in your browser.
 
 
 Please cite this software as 
-Goulbourne, C. (2023) EPHIRD (Version 2.1.1) [Computer program]. Available at https://github.com/EPHIRDdev/EPHIRD
+Goulbourne, C. (2023) EPHIRD (Version 2.1.1) [Computer program]. Available at: https://github.com/EPHIRDdev/EPHIRD
