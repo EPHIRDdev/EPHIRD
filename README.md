@@ -28,7 +28,7 @@ In the command prompt or terminal execute
 
 cd PASTE YOUR PATH HERE
 
-**or**
+_**or**_
 
 Right click on the folder containing the app
 
@@ -51,7 +51,7 @@ Run the app by executing:
 
 flask run
 
-or
+_**or**_
 
 python app.py 
 
@@ -65,10 +65,11 @@ You should now see the following
 
 ctrl + leftclick on "http://127.0.0.1:5000" 
 
-**or**
+_**or**_
 
 Open a web browser  
 Visit http://127.0.0.1:5000/ 
+
 
 
 ******The app should now be running in your browser******
