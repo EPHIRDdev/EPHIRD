@@ -73,5 +73,21 @@ Visit http://127.0.0.1:5000/
 The app should now be running in your browser.
 
 
+User Guide 
+
+Inputs –   
+N = Number of dwellings  
+A = Land area (ha)  
+Oc = Average occupancy rate  
+W = Average daily water usage per person (l)  
+C = Wastewater nutrient concentration (mg/l)  
+Ee = Existing nutrient export coefficient (kg/ha/yr)  
+En = Additional nutrient export coefficient (kg/ha/yr)  
+B = Nutrient budget (kg/yr)  
+
+Please ensure that the field 'N' is filled before selecting the local authority as this value will be used, along with the local authority, to produce the estimate for the average occupancy rate  
+
+
+
 Please cite this software as 
 Goulbourne, C. (2023) EPHIRD (Version 2.1.1) [Computer program]. Available at: https://github.com/EPHIRDdev/EPHIRD
