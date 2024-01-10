@@ -34,7 +34,7 @@ Right click on the folder containing the app
 
 Select Open in terminal
 
-**Step 4**:Install pre-requisite Python packages
+**Step 4**: Install pre-requisite Python packages
 
 Execute the the following:
 
