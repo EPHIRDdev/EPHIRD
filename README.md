@@ -36,8 +36,6 @@ Select Open in terminal
 
 **Step 4**
 
-(This is only necessary the first time you run the app. You only need to complete this step once on the same computer)
-
 Execute the the following in order to install the pre-requisite Python packages
 
 pip install Flask  
@@ -55,7 +53,7 @@ _**or**_
 
 python app.py 
 
-**Step 5**: Access the App
+**Step 6**: Access the App
 
 You should now see the following 
 
@@ -73,6 +71,9 @@ Visit http://127.0.0.1:5000/
 
 
 ******The app should now be running in your browser******
+
+
+**_Once the app has successfully launched, only steps 3,5,6 are necessary in order to re-launch_**
 
 
 
