@@ -70,7 +70,9 @@ ctrl + leftclick on "http://127.0.0.1:5000"
 Open a web browser  
 Visit http://127.0.0.1:5000/ 
 
-The app should now be running in your browser.
+
+******The app should now be running in your browser******
+
 
 
 # User Guide 
