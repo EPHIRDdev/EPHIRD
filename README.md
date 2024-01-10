@@ -79,7 +79,7 @@ Visit http://127.0.0.1:5000/
 
 # User Guide 
 
-Inputs –   
+Inputs:   
 N = Number of dwellings  
 A = Land area (ha)  
 Oc = Average occupancy rate  
