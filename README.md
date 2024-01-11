@@ -91,6 +91,10 @@ B = Nutrient budget (kg/yr)
 
 Please ensure that the field 'N' is filled before selecting the local authority as this value will be used, along with the local authority, to produce the estimate for the average occupancy rate  
 
+You may select the dropdown and begin typing in order to find a Local Authority or WwTW
+
+You may overwrite the Oc/C values given by the dropwdowns in order to use a custom value
+
 
 
 **Datasets used are derived from:**
