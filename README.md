@@ -95,7 +95,7 @@ Please ensure that the field 'N' is filled before selecting the local authority 
 
 **Datasets used are derived from:**
 
-Ofwat (2022) Water company phosphorus discharge data 2011-2021. Available at: https://www.ofwat.gov.uk/wp-content/uploads/2023/06/Water-company-phosphorus-discharge-data-2011-2021.xlsx
+Ofwat (2023) Water company phosphorus discharge data 2011-2021. Available at: https://www.ofwat.gov.uk/wp-content/uploads/2023/06/Water-company-phosphorus-discharge-data-2011-2021.xlsx
 
 ONS (2023) Household size. Available at: https://www.ons.gov.uk/datasets/TS017/editions/2021/versions/3
 
