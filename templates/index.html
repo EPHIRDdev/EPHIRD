@@ -1,96 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
-    <link rel="mask-icon" href="{{ url_for('static', filename='safari-pinned-tab.svg') }}" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+    <!-- Meta and link tags -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EPHIRD - Evaluating Phosphorus Impacts of Residential Developments</title>
+    <!-- Styles -->
     <style>
         body, html {
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e7eff6;
-            color: #333;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6dd5ed, #2193b0);
+            color: white;
+            text-align: center;
         }
         .header {
             padding: 20px;
-            text-align: center;
+            background-color: rgba(0, 0, 0, 0.2);
         }
         .header h1 {
-            color: #0056b3;
-            font-size: 2.5em;
+            font-size: 3em;
+            margin: 0;
         }
         .header p {
-            color: #333;
-            font-size: 1.2em;
+            font-size: 1.5em;
+            margin: 0;
+            opacity: 0.8;
         }
         form {
             margin: 20px auto;
-            width: 90%;
-            max-width: 960px;
+            width: 80%;
+            max-width: 600px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
         }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
         input[type="text"], select {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
         }
         button {
-            width: 100%;
-            padding: 10px;
+            padding: 10px 20px;
             color: white;
-            background-color: #0056b3;
+            background-color: #2193b0;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             font-size: 1em;
             cursor: pointer;
-            margin-top: 10px;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #003d82;
+            background-color: #6dd5ed;
         }
-        #resultStats, #resultGraph, #sensitivityAnalysis {
+        .results-container, .sensitivity-container {
             margin-top: 20px;
-            width: 90%;
-            max-width: 960px;
+            width: 80%;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-        }
-        #resultStats, #sensitivityAnalysis {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            display: none; /* Initially hidden */
         }
         img {
             max-width: 100%;
             height: auto;
         }
-        @media screen and (min-width: 600px) {
-            .form-group {
-                display: flex;
-                justify-content: space-between;
-            }
-            .form-group label,
-            .form-group input,
-            .form-group select {
-                flex: 1;
-                max-width: 48%;
-            }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -99,7 +90,6 @@
         <h1>EPHIRD</h1>
         <p>Evaluating Phosphorus Impacts of Residential Developments</p>
     </div>
-
     <form id="simulationForm" onsubmit="event.preventDefault(); validateAndRunSimulation();">
         <div class="form-group">
             <label for="N">N:</label>
@@ -156,7 +146,9 @@
     <div id="resultStats"></div>
     <div id="resultGraph"></div>
 
-    	    <button onclick="runSensitivityAnalysis()">Run Sensitivity Analysis</button>
+        <div class="button-container">
+            <button onclick="runSensitivityAnalysis()" class="btn">Run Sensitivity Analysis</button>
+        </div>
 
     <div id="sensitivityAnalysis" style="display: none;">
         <img id="sensitivityGraph" src="" alt="Sensitivity Analysis Graph" style="max-width: 100%; height: auto;">
