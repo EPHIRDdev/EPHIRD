@@ -102,6 +102,10 @@
 
     <form id="simulationForm" onsubmit="event.preventDefault(); validateAndRunSimulation();">
         <div class="form-group">
+            <label for="N">N:</label>
+            <input type="text" id="N" name="N" required>
+        </div>
+	<div class="form-group">
             <label for="wwtwDropdown">WwTW:</label>
             <select id="wwtwDropdown" name="C" onchange="updateCValue();" required>
                 <option value="">--Select WWTW--</option>
@@ -120,11 +124,11 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="N">N:</label>
-            <input type="text" id="N" name="N" required>
+            <label for="A">A:</label>
+            <input type="text" id="A" name="A" required>
         </div>
         <div class="form-group">
-            <label for="Oc">Oc (Bootstrapped):</label>
+            <label for="Oc">Oc:</label>
             <input type="text" id="Oc" name="Oc" required>
         </div>
         <div class="form-group">
@@ -140,10 +144,6 @@
             <input type="text" id="Ee" name="Ee" required>
         </div>
         <div class="form-group">
-            <label for="A">A:</label>
-            <input type="text" id="A" name="A" required>
-        </div>
-        <div class="form-group">
             <label for="En">En:</label>
             <input type="text" id="En" name="En" required>
         </div>
@@ -156,17 +156,16 @@
     <div id="resultStats"></div>
     <div id="resultGraph"></div>
 
-    <button onclick="runSensitivityAnalysis()">Run Sensitivity Analysis</button>
+    	    <button onclick="runSensitivityAnalysis()">Run Sensitivity Analysis</button>
 
-    <div id="sensitivityAnalysis">
-        <h3>Sensitivity Analysis</h3>
+    <div id="sensitivityAnalysis" style="display: none;">
         <img id="sensitivityGraph" src="" alt="Sensitivity Analysis Graph" style="max-width: 100%; height: auto;">
     </div>
 
     <script>
         document.getElementById('Local_authority').addEventListener('change', function() {
             var authority = this.value;
-            var N = document.getElementById('N').value || 100;  // Default to 100 if N is not set
+            var N = document.getElementById('N').value || 100;  
 
             fetch('/get_oc_values', {
                 method: 'POST',
@@ -232,6 +231,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.sensitivity_graph) {
+	            document.getElementById('sensitivityAnalysis').style.display = 'block';
                     document.getElementById('sensitivityGraph').src = 'data:image/png;base64,' + data.sensitivity_graph;
                 }
             })
