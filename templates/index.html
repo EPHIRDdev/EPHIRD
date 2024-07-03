@@ -144,6 +144,7 @@
         </div>
 
             <input type="hidden" id="std_dev_oc" name="std_dev_oc">
+            <input type="hidden" id="std_dev_w" name="std_dev_w">
         
             <button type="submit">Run Simulation</button>
     </form>
@@ -160,6 +161,29 @@
     </div>
 
     <script>
+        document.getElementById('N').addEventListener('input', function() {
+            var N = this.value;
+            if(N) {
+                fetch('/simulate_w', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `N=${N}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.mean_w && data.std_dev_w) {
+                        document.getElementById('W').value = data.mean_w.toFixed(3);
+                        document.getElementById('std_dev_w').value = data.std_dev_w.toFixed(3);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during W simulation:', error);
+                });
+            }
+        });
+
         document.getElementById('Local_authority').addEventListener('change', function() {
             var authority = this.value;
             var N = document.getElementById('N').value || 100;  
@@ -202,16 +226,14 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    var stats = data.stats;
-                    var statsText = `Mean of Output: ${parseFloat(stats.mean_output).toFixed(3)}<br>` +
-                                    `Median of Output: ${parseFloat(stats.median_output).toFixed(3)}<br>` +
-                                    `Standard Deviation of Output: ${parseFloat(stats.std_dev_output).toFixed(3)}`;
-                    document.getElementById('resultStats').innerHTML = statsText;
+                    document.getElementById('resultStats').innerHTML = data.stats.mean_output + '<br>' +
+                                                                    data.stats.median_output + '<br>' +
+                                                                    data.stats.std_dev_output;
                     document.getElementById('resultGraph').innerHTML = '<img src="' + data.graph + '" />';
                 });
             }
         }
-	
+
         function runSensitivityAnalysis() {
             var formData = new FormData(document.getElementById('simulationForm'));
             var data = {};
